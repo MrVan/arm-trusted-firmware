@@ -325,8 +325,10 @@ void bl31_early_platform_setup2(u_register_t arg0, u_register_t arg1,
 void bl31_plat_arch_setup(void)
 {
 	/* add the mmap */
-	mmap_add_region(0x900000, 0x900000, 0x40000,
+	mmap_add_region(0x900000, 0x900000, 0x40000 - 0x1000,
 			MT_MEMORY | MT_RW);
+	mmap_add_region(0x93f000, 0x93f000, 0x1000,
+			MT_DEVICE | MT_RW);
 	mmap_add_region(0x100000, 0x100000, 0x10000,
 			MT_MEMORY | MT_RW);
 	mmap_add_region(0x40000000, 0x40000000, 0xc0000000,

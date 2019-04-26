@@ -66,6 +66,9 @@
 
 #define IMX_SIP_MISC_SET_TEMP		0xc200000c
 
+#define FSL_SIP_SCMI_1			0xc20000fe
+#define FSL_SIP_SCMI_2			0xc20000ff
+
 #if defined(PLAT_IMX8QM) || defined(PLAT_IMX8QX)
 int imx_cpufreq_handler(uint32_t smc_fid, u_register_t x1,
 			u_register_t x2, u_register_t x3);
@@ -79,6 +82,25 @@ int imx_misc_set_temp_handler(uint32_t smc_fid, u_register_t x1,
 				u_register_t x2, u_register_t x3,
 				u_register_t x4);
 #endif
+
+struct scmi_shared_mem {
+        uint32_t reserved;
+        uint32_t channel_status;
+#define SCMI_SHMEM_CHAN_STAT_CHANNEL_ERROR      BIT(1)
+#define SCMI_SHMEM_CHAN_STAT_CHANNEL_FREE       BIT(0)
+        uint32_t reserved1[2];
+        uint32_t flags;
+#define SCMI_SHMEM_FLAG_INTR_ENABLED    BIT(0)
+        uint32_t length;
+        uint32_t msg_header;
+        uint8_t msg_payload[0];
+};
+
+/* Corresponding to msg_payload */
+struct response {
+	uint32_t status;
+	uint32_t data[0];
+};
 
 #if defined(PLAT_IMX8M) || defined(PLAT_IMX8MM)
 int imx_gpc_handler(uint32_t  smc_fid, u_register_t x1,
@@ -95,6 +117,10 @@ int imx_noc_handler(uint32_t smc_fid, u_register_t x1,
  		u_register_t x2, u_register_t x3);
 int dram_dvfs_handler(uint32_t smc_fid, u_register_t x1,
 	 u_register_t x2, u_register_t x3);
+
+int scmi_handler(uint32_t smc_fid, u_register_t x1, u_register_t x2, u_register_t x3);
+int scmi_pd_handler(uint32_t msg_id, struct response *response, struct scmi_shared_mem *mem);
+int scmi_clk_handler(uint32_t msg_id, struct response *response, struct scmi_shared_mem *mem);
 #endif
 
 uint64_t imx_buildinfo_handler(uint32_t smc_fid, u_register_t x1,

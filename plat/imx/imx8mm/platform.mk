@@ -15,7 +15,10 @@ PLAT_DRAM_SOURCES	:=	plat/imx/common/imx8m/dram.c		\
 				plat/imx/common/imx8m/ddr4_retention.c \
 				plat/imx/common/imx8m/lpddr4_helper.c	\
 				plat/imx/common/imx8m/lpddr4_dvfs.c	\
-				plat/imx/common/imx8m/ddr4_dvfs.c
+				plat/imx/common/imx8m/ddr4_dvfs.c	\
+				plat/imx/common/imx8m/scmi.c		\
+				plat/imx/common/imx8m/scmi_pd.c		\
+				plat/imx/common/imx8m/scmi_clk.c
 
 BL31_SOURCES		+=	plat/imx/common/imx8_helpers.S		\
 				plat/imx/common/mxcuart_console.S	\

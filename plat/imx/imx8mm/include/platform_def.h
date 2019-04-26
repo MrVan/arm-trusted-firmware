@@ -30,7 +30,7 @@
 #define PLAT_STOP_OFF_STATE		3
 
 #define BL31_BASE			0x920000
-#define BL31_LIMIT			0x940000
+#define BL31_LIMIT			(0x940000 - 0x1000)
 
 #ifdef SPD_trusty
 #define BL32_SIZE			0x02000000
@@ -99,6 +99,6 @@
 
 #define COUNTER_FREQUENCY		8000000 /* 8MHz */
 
-#define DEBUG_CONSOLE			0
+#define DEBUG_CONSOLE			1
 #define IMX_WDOG_B_RESET
 #define PLAT_IMX8MM			1
